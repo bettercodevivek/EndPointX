@@ -31,14 +31,18 @@ const LandingPage = () => {
 
       {/* Screenshot Preview */}
       <section className="flex justify-center px-4 mb-16">
-        <div className="w-full max-w-4xl rounded-2xl overflow-hidden shadow-2xl border border-gray-700">
+        <div className="w-full max-w-4xl rounded-2xl overflow-hidden shadow-2xl border border-gray-700 relative">
+          <div className="hidden md:flex absolute inset-0 bg-black/50 backdrop-blur-sm items-center justify-center text-white text-xl font-semibold opacity-0 hover:opacity-100 transition-opacity duration-300">
+            Hover to Preview
+          </div>
           <img
-            src="https://i.postimg.cc/Z5J88QWb/Screenshot-2025-04-06-160431.png"
+            src="https://i.postimg.cc/D0rgFJjF/Screenshot-2025-04-06-163000.png"
             alt="Preview of API Tester"
-            className="w-full h-auto object-cover blur-sm hover:blur-none transition duration-300"
+            className="w-full h-auto object-cover transition duration-300 md:blur-sm md:hover:blur-none"
           />
         </div>
       </section>
+
 
       {/* Features Section */}
       <section id="features" className="py-16 px-6 md:px-20 bg-gray-900">
