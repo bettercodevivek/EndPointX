@@ -35,11 +35,29 @@ function App() {
   
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
-      <h1 className="text-2xl font-bold mb-6 text-center">Visual API Tester</h1>
+    <div className="min-h-screen bg-gradient-to-br from-gray-100 to-white p-4 sm:p-6 md:p-10">
+  <div className="max-w-4xl mx-auto space-y-8">
+    <header className="text-center">
+      <h1 className="text-3xl sm:text-4xl font-bold text-gray-800 mb-2">
+        🚀 Visual API Tester
+      </h1>
+      <p className="text-gray-500 text-sm sm:text-base">
+        Test your APIs with ease — fast, smart, and beautiful.
+      </p>
+    </header>
+
+    <div className="bg-white shadow-xl rounded-2xl p-6 sm:p-8 border border-gray-200">
       <ApiForm onSendRequest={handleSendRequest} />
-      <ResponseViewer response={apiResponse} />
     </div>
+
+    {apiResponse && (
+      <div className="bg-white shadow-xl rounded-2xl p-6 sm:p-8 border border-gray-200">
+        <ResponseViewer response={apiResponse} />
+      </div>
+    )}
+  </div>
+</div>
+
   );
 }
 

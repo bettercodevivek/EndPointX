@@ -34,37 +34,45 @@ const ResponseViewer = ({ response }) => {
   };
 
   return (
-    <div className="bg-gray-800 text-white p-4 rounded space-y-4 relative">
-      <div className="text-green-400 font-semibold">
-        ✅ Status: {status}
-      </div>
-
+    <div className="bg-gray-900 text-white p-6 rounded-xl shadow-md space-y-6 max-w-3xl mx-auto mt-8">
+    {/* Status */}
+    <div className="flex flex-wrap justify-between items-center">
+      <span className="text-green-400 font-semibold text-lg">✅ Status: {status}</span>
       {time && (
-        <div className="text-sm text-gray-400">
-          ⏱️ Request Time: {time}
-        </div>
+        <span className="text-sm text-gray-400">⏱️ Time: {time}</span>
       )}
-
-      <div>
-        <h4 className="text-yellow-400 font-semibold">Headers</h4>
-        <pre className="text-sm">{JSON.stringify(headers, null, 2)}</pre>
+    </div>
+  
+    {/* Headers */}
+    <div>
+      <h4 className="text-yellow-400 font-semibold mb-1">📦 Headers</h4>
+      <div className="bg-gray-800 rounded-lg p-4 overflow-x-auto text-sm border border-gray-700">
+        <pre className="whitespace-pre-wrap break-all">
+          {JSON.stringify(headers, null, 2)}
+        </pre>
       </div>
-
-      <div>
-        <h4 className="text-cyan-400 font-semibold">Body</h4>
-
+    </div>
+  
+    {/* Body */}
+    <div>
+      <div className="flex justify-between items-center mb-2">
+        <h4 className="text-cyan-400 font-semibold">📄 Response Body</h4>
         <button
           onClick={copyToClipboard}
-          className="mb-2 bg-blue-600 hover:bg-blue-700 text-white text-sm px-3 py-1 rounded"
+          className="bg-blue-600 hover:bg-blue-700 text-white text-xs px-4 py-1.5 rounded-lg transition"
         >
-          📋 {copyStatus || "Copy Body"}
+          📋 {copyStatus || "Copy JSON"}
         </button>
-
-        <SyntaxHighlighter language="json" style={oneDark}>
+      </div>
+  
+      <div className="rounded-lg overflow-hidden border border-gray-700">
+        <SyntaxHighlighter language="json" style={oneDark} customStyle={{ margin: 0, background: "transparent" }}>
           {formatted}
         </SyntaxHighlighter>
       </div>
     </div>
+  </div>
+  
   );
 };
 
