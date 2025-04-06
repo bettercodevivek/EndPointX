@@ -1,11 +1,31 @@
-import React from 'react'
-import './index.css'
-import ApiForm from './Components/ApiForm';
-function App(){
-  return(
-   <React.Fragment>
-    <ApiForm/>
-   </React.Fragment>
+import { useState } from "react";
+import ApiForm from "./Components/ApiForm";
+import ResponseViewer from "./Components/ResponseViewer";
+import React from "react";
+function App() {
+  const [apiResponse, setApiResponse] = useState(null);
+
+  const handleSendRequest = async ({ url, method, body }) => {
+    try {
+      const response = await fetch(url, {
+        method,
+        headers: { "Content-Type": "application/json" },
+        ...(method !== "GET" && { body })
+      });
+
+      const data = await response.json();
+      setApiResponse(data);
+    } catch (error) {
+      setApiResponse({ error: error.message });
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-gray-50 p-6">
+      <h1 className="text-2xl font-bold mb-6 text-center">Visual API Tester</h1>
+      <ApiForm onSendRequest={handleSendRequest} />
+      <ResponseViewer response={apiResponse} />
+    </div>
   );
 }
 
