@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import QueryParamsSection from "./QueryParams";
-const ApiForm = ({ setApiResponse }) => {
+const ApiForm = ({ onSendRequest }) => {
   const [url, setUrl] = useState("");
   const [method, setMethod] = useState("GET");
   const [body, setBody] = useState("");
@@ -20,52 +20,43 @@ const ApiForm = ({ setApiResponse }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
   
-    try {
-      const headersObject = {};
-      headers.forEach(({ key, value }) => {
-        if (key && value) {
-          headersObject[key] = value;
-        }
-      });
-  
-      const options = {
-        method,
-        headers: headersObject,
-      };
-  
-   
-      if (["POST", "PUT", "PATCH"].includes(method) && body) {
-        try {
-          options.body = JSON.stringify(JSON.parse(body)); // Validate JSON
-          if (!options.headers["Content-Type"]) {
-            options.headers["Content-Type"] = "application/json";
-          }
-        } catch (err) {
-          return setApiResponse({ error: "Invalid JSON in body" });
-        }
+    const headersObject = {};
+    headers.forEach(({ key, value }) => {
+      if (key && value) {
+        headersObject[key] = value;
       }
-
-      const searchParams = new URLSearchParams();
-queryParams.forEach(({ key, value }) => {
-  if (key && value) {
-    searchParams.append(key, value);
-  }
-});
-
-// Final URL
-    const finalUrl = searchParams.toString()
-  ? `${url}?${searchParams.toString()}`
-  : url;
-
-    const response = await fetch(finalUrl, options);
+    });
   
-      const data = await response.json();
+    const options = {
+      method,
+      headers: headersObject,
+    };
   
-      setApiResponse(data);
-    } catch (error) {
-      setApiResponse({ error: error.message });
+    if (["POST", "PUT", "PATCH"].includes(method) && body) {
+      try {
+        options.body = JSON.stringify(JSON.parse(body)); // Validate JSON
+        if (!options.headers["Content-Type"]) {
+          options.headers["Content-Type"] = "application/json";
+        }
+      } catch (err) {
+        return onSendRequest({ error: "Invalid JSON in body" });
+      }
     }
-  };
+  
+    const searchParams = new URLSearchParams();
+    queryParams.forEach(({ key, value }) => {
+      if (key && value) {
+        searchParams.append(key, value);
+      }
+    });
+  
+    const finalUrl = searchParams.toString()
+      ? `${url}?${searchParams.toString()}`
+      : url;
+  
+    // 🔥 Finally call parent handler
+    onSendRequest({ url: finalUrl, method, body: options.body || null });
+  };  
   
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
