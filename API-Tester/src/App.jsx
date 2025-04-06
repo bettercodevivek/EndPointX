@@ -6,27 +6,32 @@ function App() {
   const [apiResponse, setApiResponse] = useState(null);
 
   const handleSendRequest = async ({ url, method, body }) => {
+    const startTime = performance.now(); // start timer
     try {
       const response = await fetch(url, {
         method,
         headers: { "Content-Type": "application/json" },
-        ...(method !== "GET" && { body }),
+        ...(method !== "GET" && { body })
       });
   
-      const contentType = response.headers.get("content-type");
-      const data = contentType?.includes("application/json")
-        ? await response.json()
-        : await response.text();
+      const data = await response.json();
+      const endTime = performance.now(); // end timer
   
       setApiResponse({
-        data,
+        data, // ✅ renamed from body
         status: response.status,
         headers: Object.fromEntries(response.headers.entries()),
+        time: `${(endTime - startTime).toFixed(2)} ms`
       });
     } catch (error) {
-      setApiResponse({ error: error.message });
+      const endTime = performance.now();
+      setApiResponse({
+        error: error.message,
+        time: `${(endTime - startTime).toFixed(2)} ms`
+      });
     }
   };
+  
   
 
   return (
