@@ -1,9 +1,10 @@
 import React from 'react'
 import './index.css'
+import ApiForm from './Components/ApiForm';
 function App(){
   return(
    <React.Fragment>
-    <h2 className='text-yellow-500 bg-black'>hello</h2>
+    <ApiForm/>
    </React.Fragment>
   );
 }
