@@ -10,15 +10,24 @@ function App() {
       const response = await fetch(url, {
         method,
         headers: { "Content-Type": "application/json" },
-        ...(method !== "GET" && { body })
+        ...(method !== "GET" && { body }),
       });
-
-      const data = await response.json();
-      setApiResponse(data);
+  
+      const contentType = response.headers.get("content-type");
+      const data = contentType?.includes("application/json")
+        ? await response.json()
+        : await response.text();
+  
+      setApiResponse({
+        data,
+        status: response.status,
+        headers: Object.fromEntries(response.headers.entries()),
+      });
     } catch (error) {
       setApiResponse({ error: error.message });
     }
   };
+  
 
   return (
     <div className="min-h-screen bg-gray-50 p-6">
