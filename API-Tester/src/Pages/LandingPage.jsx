@@ -1,5 +1,5 @@
 import React from "react";
-import { FaRocket, FaCode, FaBolt, FaMoon, FaUserShield } from "react-icons/fa";
+import { FaRocket, FaCode, FaBolt, FaMoon, FaUserShield, FaGithub, FaGithubAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 const LandingPage = () => {
@@ -15,7 +15,7 @@ const LandingPage = () => {
         </p>
         <div className="flex justify-center gap-4">
           <Link
-            to="/app"
+            to="/tester"
             className="bg-blue-600 hover:bg-blue-700 transition px-6 py-3 rounded-xl text-white font-semibold shadow-lg"
           >
             🚀 Launch Now
@@ -87,8 +87,18 @@ const LandingPage = () => {
       </section>
 
       {/* Footer */}
-      <footer className="py-6 text-center text-sm text-gray-500">
-        BetterCodeVivek <a href="" className="underline hover:text-white">View on GitHub</a>
+      <footer className="py-6 text-sm text-gray-500 flex flex-col items-center justify-center text-center">
+        <p>
+          Developed By <span className="font-bold">BetterCodeVivek</span>
+        </p>
+        <a
+          href="https://github.com/BetterCodeVivek"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-2 hover:text-white"
+        >
+          <FaGithub className="text-xl" />
+        </a>
       </footer>
     </div>
   );

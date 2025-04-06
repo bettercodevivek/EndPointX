@@ -39,7 +39,7 @@ function ApiTester() {
   <div className="max-w-4xl mx-auto space-y-8">
     <header className="text-center">
       <h1 className="text-3xl sm:text-4xl font-bold text-gray-800 mb-2">
-        🚀 Visual API Tester
+        🚀 EndPointX- A Visual API Tester
       </h1>
       <p className="text-gray-500 text-sm sm:text-base">
         Test your APIs with ease — fast, smart, and beautiful.
