@@ -1,9 +1,11 @@
 import React, { useState } from "react";
+import QueryParamsSection from "./QueryParams";
 const ApiForm = ({ setApiResponse }) => {
   const [url, setUrl] = useState("");
   const [method, setMethod] = useState("GET");
   const [body, setBody] = useState("");
   const [headers, setHeaders] = useState([{ key: "", value: "" }]);
+  const [queryParams, setQueryParams] = useState([{ key: "", value: "" }]);
 
   const handleHeaderChange = (index, field, value) => {
     const newHeaders = [...headers];
@@ -31,7 +33,7 @@ const ApiForm = ({ setApiResponse }) => {
         headers: headersObject,
       };
   
-      // Add body only if it's a method that supports it
+   
       if (["POST", "PUT", "PATCH"].includes(method) && body) {
         try {
           options.body = JSON.stringify(JSON.parse(body)); // Validate JSON
@@ -42,8 +44,21 @@ const ApiForm = ({ setApiResponse }) => {
           return setApiResponse({ error: "Invalid JSON in body" });
         }
       }
+
+      const searchParams = new URLSearchParams();
+queryParams.forEach(({ key, value }) => {
+  if (key && value) {
+    searchParams.append(key, value);
+  }
+});
+
+// Final URL
+    const finalUrl = searchParams.toString()
+  ? `${url}?${searchParams.toString()}`
+  : url;
+
+    const response = await fetch(finalUrl, options);
   
-      const response = await fetch(url, options);
       const data = await response.json();
   
       setApiResponse(data);
@@ -61,6 +76,10 @@ const ApiForm = ({ setApiResponse }) => {
         onChange={(e) => setUrl(e.target.value)}
         className="w-full p-2 border rounded"
       />
+       <QueryParamsSection
+        queryParams={queryParams}
+        setQueryParams={setQueryParams}
+        />
 
       <select
         value={method}
