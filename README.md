@@ -27,8 +27,6 @@ Built using **React** and **TailwindCSS**, this tool aims to bring performance, 
 
 ## 📷 Screenshots
 
-> Replace these with actual images from your project for best results.
-
 ### 🔹 Landing Page
 [![Landing Page](https://i.postimg.cc/Nfx4zX2k/Screenshot-85.png)](https://postimg.cc/MvvVcvDn)
 
